@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+
+using Microsoft.AspNetCore.Mvc;
 using MyGuitarShop.Data.Ado.Factories;
 
 namespace MyGuitarShop.Api.Controllers
@@ -31,6 +33,7 @@ namespace MyGuitarShop.Api.Controllers
             try
             {
                 using var connection = sqlConnectionFactory.OpenSqlConnection();
+
                 return Ok(new { Message = "Connection successful!", connection.Database });
             }
             catch (Exception)
