@@ -1,6 +1,6 @@
 @MyGuitarShop.Api_HostAddress = http://localhost:5138
 
-GET {{MyGuitarShop.Api_HostAddress}}/weatherforecast/
+GET {{MyGuitarShop.Api_HostAddress}}/
 Accept: application/json
 
 ###
