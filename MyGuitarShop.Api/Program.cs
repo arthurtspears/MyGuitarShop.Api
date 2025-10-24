@@ -1,8 +1,7 @@
-
-using Microsoft.Extensions.DependencyInjection;
 using MyGuitarShop.Data.Ado.Factories;
 using System.Diagnostics;
 using Microsoft.AspNetCore.HttpLogging;
+using MyGuitarShop.Data.Ado.Repositories;
 
 namespace MyGuitarShop.Api
 {
@@ -14,9 +13,10 @@ namespace MyGuitarShop.Api
             {
                 var builder = WebApplication.CreateBuilder(args);
 
-                // Add services to the container.
+                // Add logging to the container.
                 AddLogging(builder);
 
+                // Add services to the container.
                 AddServices(builder);
 
                 if (builder.Environment.IsDevelopment())
@@ -25,6 +25,12 @@ namespace MyGuitarShop.Api
                     builder.Services.AddEndpointsApiExplorer();
                     builder.Services.AddSwaggerGen();
                 }
+
+                builder.Host.UseDefaultServiceProvider(options =>
+                {
+                    options.ValidateScopes = true;
+                    options.ValidateOnBuild = true;
+                });
 
                 var app = builder.Build();
 
@@ -35,7 +41,6 @@ namespace MyGuitarShop.Api
                     app.UseSwagger();
                     app.UseSwaggerUI();
                 }
-
                 ConfigureApplication(app);
 
                 await app.RunAsync();
@@ -74,6 +79,7 @@ namespace MyGuitarShop.Api
 
             builder.Services.AddSingleton(new SqlConnectionFactory(connectionString));
 
+            builder.Services.AddScoped<ProductRepo>();
 
             builder.Services.AddControllers();
         }
