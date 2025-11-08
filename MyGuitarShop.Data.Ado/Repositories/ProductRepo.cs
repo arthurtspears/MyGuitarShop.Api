@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
-using MyGuitarShop.Common.Dtos;
+using MyGuitarShop.Common.Interfaces;
 using MyGuitarShop.Data.Ado.Entities;
 using MyGuitarShop.Data.Ado.Factories;
 
@@ -9,8 +9,9 @@ namespace MyGuitarShop.Data.Ado.Repositories
     public class ProductRepo(
         ILogger<ProductRepo> logger,
         SqlConnectionFactory connectionFactory)
+        : IRepository<ProductEntity>
     {
-        public async Task<ProductEntity?> FindProductByProductCodeAsync(ProductDto productDto)
+        public async Task<ProductEntity?> FindProductByProductCodeAsync(ProductEntity productDto)
         {
             ProductEntity? product = null;
             try
@@ -41,7 +42,7 @@ namespace MyGuitarShop.Data.Ado.Repositories
             return product;
         }
 
-        public async Task<ProductEntity?> GetProductByIdAsync(int id)
+        public async Task<ProductEntity?> GetByIdAsync(int id)
         {
             ProductEntity? product = null;
             try
@@ -72,7 +73,7 @@ namespace MyGuitarShop.Data.Ado.Repositories
             return product;
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetAllProductsAsync()
+        public async Task<IEnumerable<ProductEntity>> GetAllAsync()
         {
             var products = new List<ProductEntity>();
 
@@ -107,7 +108,7 @@ namespace MyGuitarShop.Data.Ado.Repositories
             return products;
         }
 
-        public async Task<int> InsertAsync(ProductDto product)
+        public async Task<int> InsertAsync(ProductEntity product)
         {
             const string query = @"INSERT INTO Products (CategoryID, ProductCode, ProductName, Description, ListPrice, DiscountPercent, DateAdded)
                                VALUES (@CategoryID, @ProductCode, @ProductName, @Description, @ListPrice, @DiscountPercent, @DateAdded)";
@@ -134,7 +135,7 @@ namespace MyGuitarShop.Data.Ado.Repositories
             }
         }
 
-        public async Task<int> UpdateAsync(int id, ProductDto product)
+        public async Task<int> UpdateAsync(int id, ProductEntity product)
         {
             const string query = @"UPDATE Products
                                SET ProductName = @ProductName, ListPrice = @ListPrice, DiscountPercent = @DiscountPercent

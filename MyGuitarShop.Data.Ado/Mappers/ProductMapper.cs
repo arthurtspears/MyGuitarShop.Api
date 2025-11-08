@@ -3,7 +3,7 @@ using MyGuitarShop.Data.Ado.Entities;
 
 namespace MyGuitarShop.Data.Ado.Mappers
 {
-    public static class ProductMapper
+    public static partial class Mapper
     {
         public static ProductEntity ToEntity(ProductDto dto)
         {

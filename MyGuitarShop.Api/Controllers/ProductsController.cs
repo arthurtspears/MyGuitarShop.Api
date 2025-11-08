@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyGuitarShop.Common.Dtos;
+using MyGuitarShop.Data.Ado.Mappers;
 using MyGuitarShop.Data.Ado.Repositories;
 
 namespace MyGuitarShop.Api.Controllers
@@ -16,7 +17,7 @@ namespace MyGuitarShop.Api.Controllers
         {
             try
             {
-                var products = await repo.GetAllProductsAsync();
+                var products = await repo.GetAllAsync();
                 
                 return products.Any() ? Ok(products) : NotFound();
             }
@@ -33,7 +34,7 @@ namespace MyGuitarShop.Api.Controllers
         {
             try
             {
-                var product = await repo.GetProductByIdAsync(id);
+                var product = await repo.GetByIdAsync(id);
 
                 if(product == null)
                     return NotFound($"Product with id {id} not found");
@@ -53,7 +54,7 @@ namespace MyGuitarShop.Api.Controllers
         {
             try
             {
-                var numberProductsCreated = await repo.InsertAsync(newProduct);
+                var numberProductsCreated = await repo.InsertAsync(Mapper.ToEntity(newProduct));
 
                 return Ok($"{numberProductsCreated} new product created.");
             }
@@ -70,10 +71,10 @@ namespace MyGuitarShop.Api.Controllers
         {
             try
             {
-                if (await repo.GetProductByIdAsync(id) == null)
+                if (await repo.GetByIdAsync(id) == null)
                     return NotFound($"Product with id {id} not found");
 
-                var numberProductsUpdated = await repo.UpdateAsync(id, product);
+                var numberProductsUpdated = await repo.UpdateAsync(id, Mapper.ToEntity(product));
 
                 return Ok($"{numberProductsUpdated} new product created.");
             }
@@ -90,7 +91,7 @@ namespace MyGuitarShop.Api.Controllers
         {
             try
             {
-                if (await repo.GetProductByIdAsync(id) == null)
+                if (await repo.GetByIdAsync(id) == null)
                     return NotFound($"Product with id {id} not found");
 
                 var numberProductsUpdated = await repo.DeleteAsync(id);
