@@ -1,0 +1,13 @@
+﻿using MyGuitarShop.Data.EFCore.Abstract;
+using MyGuitarShop.Data.EFCore.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MyGuitarShop.Data.EFCore.Context;
+
+namespace MyGuitarShop.Data.EFCore.Repositories
+{
+    public class CategoryRepository(MyGuitarShopContext dbContext) : RepositoryBase<Category>(dbContext) { }
+}

@@ -7,12 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MyGuitarShop.Common\MyGuitarShop.Common.csproj" />
     <ProjectReference Include="..\MyGuitarShop.Data.Ado\MyGuitarShop.Data.Ado.csproj" />
+    <ProjectReference Include="..\MyGuitarShop.Data.EFCore\MyGuitarShop.Data.EFCore.csproj" />
   </ItemGroup>
 
 </Project>
